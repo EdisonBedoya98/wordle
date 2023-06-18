@@ -9,7 +9,7 @@ export default {
         yellow: "#CEB02C",
         gray: "#939B9F",
         background: "#F3F3F3",
-        "dark-background": "#262B3CE3",
+        "dark-background": "#262B3C",
         "gray-key": "#D3D6DA",
         "dark-key": "#565F7E",
         "white-background": "#F3F3F3E3",

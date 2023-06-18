@@ -17,7 +17,7 @@ export const Keyboard = () => {
     }
   };
   return (
-    <div className="bg-background dark:bg-dark-background grid gap-y-2 px-5 py-8 max-w-[638px] rounded-2xl mx-auto ">
+    <div className="bg-background dark:bg-[#DADCE008] grid gap-y-2 px-5 py-8 max-w-[638px] rounded-2xl mx-auto ">
       <div className="flex gap-x-2 ml-12">
         {keyboardKeysFirstRow.map((value) => (
           <Key key={value} value={value} onClick={handleKeyPress} />
