@@ -1,9 +1,9 @@
-import { Box } from "../components/Box";
-import { Button } from "../components/Button";
+import { Box } from "./Box";
+import { Button } from "./Button";
 
 export function HowToPlay() {
   return (
-    <section className="grid  max-w-xl mx-auto rounded-2xl pt-14 pb-6 bg-background px-10 content-center my-14 ">
+    <section className="grid max-w-xl dark:bg-dark-background dark:text-white mx-auto rounded-2xl pt-14 pb-6 bg-background px-10 content-center my-14 ">
       <h1 className="text-center font-extrabold text-4xl mb-8">Cómo jugar</h1>
       <article className="grid gap-y-2 mb-4">
         <p>Adivina la palabra oculta en cinco intentos. </p>
