@@ -9,17 +9,18 @@ export interface BoxProps {
 }
 export interface LetterBox {
   letter: string;
-  color: ColorBox;
+  color?: ColorBox;
 }
 export interface WordsState {
-  words: string[];
-  currentWord: string | null;
+  dictionary: string[];
+  currentWordFromDictionary: string | null;
   lettersDashboard: LetterBox[];
-  currentWordLength: number;
+  currentWordAddingToDashboard: string;
+  isGameOver: boolean;
   currentRowDashboard: number;
   currentIndexDashboard: number;
   loading: boolean;
   error: null | unknown;
   showHowToPlayModal: boolean;
 }
-export type ColorBox = "green" | "yellow" | "gray" | "white";
+export type ColorBox = "green" | "yellow" | "gray" | "default";

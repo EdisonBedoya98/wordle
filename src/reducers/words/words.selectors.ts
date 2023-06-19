@@ -1,11 +1,14 @@
 import { RootState } from "../../app/store";
 
-export const selectCurrentWord = (state: RootState) => state.words.currentWord;
-export const selectWords = (state: RootState) => state.words.words;
+export const selectCurrentWordFromDictionary = (state: RootState) =>
+  state.words.currentWordFromDictionary;
+export const selectDictionary = (state: RootState) => state.words.dictionary;
 export const selectShowHowToPlayModal = (state: RootState) =>
   state.words.showHowToPlayModal;
 export const selectLettersDashboard = (state: RootState) =>
   state.words.lettersDashboard;
+export const selectCurrentWordAddingToDashboard = (state: RootState) =>
+  state.words.currentWordAddingToDashboard;
 
 /* export const selectSelectedMonster = (state: RootState) =>
   state.monsters.selectedMonster;

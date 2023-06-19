@@ -35,6 +35,7 @@ export const addNewLetterToDashboard = createAction<LetterBox>(
 export const removeLetterOfTheDashboard = createAction(
   "words/removeLetterOfTheDashboard"
 );
+export const validateWord = createAction("words/validateWord");
 
 /* export const setMachineMonsterRandomly = createAction(
   "monsters/setMachineMonsterRandomly"

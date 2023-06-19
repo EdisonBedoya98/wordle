@@ -9,15 +9,19 @@ import {
 } from "../reducers/words/words.actions";
 import {
   selectShowHowToPlayModal,
-  selectWords,
+  selectDictionary,
+  selectCurrentWordAddingToDashboard,
 } from "../reducers/words/words.selectors";
 import { useLocalStorage } from "./useLocalStorage";
 
 export function useWords() {
   const dispatch = useAppDispatch();
 
-  const settledWords = useSelector(selectWords);
+  const settledWords = useSelector(selectDictionary);
   const selectedShowHowToPlayModal = useSelector(selectShowHowToPlayModal);
+  const selectedCurrentWordAddingToDashboard = useSelector(
+    selectCurrentWordAddingToDashboard
+  );
   const { isKeyInLocalStorage, setLocalStorageItem } = useLocalStorage();
 
   useEffect(() => {
@@ -45,6 +49,7 @@ export function useWords() {
 
   return {
     selectedShowHowToPlayModal,
+    selectedCurrentWordAddingToDashboard,
     setShowHowToPlayModal,
   };
 }

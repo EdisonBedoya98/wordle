@@ -2,7 +2,7 @@ import { BoxProps } from "../models/interfaces/words.interface";
 
 export function Box({
   word,
-  color = "white",
+  color = "default",
   textColor = "black",
   onClick,
 }: BoxProps) {
@@ -10,7 +10,7 @@ export function Box({
     green: "bg-green",
     yellow: "bg-yellow",
     gray: "bg-gray",
-    white: "bg-white",
+    default: "bg-[#939B9F4D]/30 dark:bg-[#939B9F4D]/20",
   };
   const textColorTailwind = textColor === "white" ? "text-white" : "text-black";
   return (
