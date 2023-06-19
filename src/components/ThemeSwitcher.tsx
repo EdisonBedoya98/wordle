@@ -1,7 +1,8 @@
 import lightModeLogo from "../assets/light-mode.svg";
 import darkModeLogo from "../assets/dark-mode.svg";
 import { useEffect, useState } from "react";
-export const ThemeSwitcher = () => {
+
+export function ThemeSwitcher() {
   const [isLightMode, setIsLightMode] = useState(true);
 
   useEffect(() => {
@@ -21,4 +22,4 @@ export const ThemeSwitcher = () => {
       className="cursor-pointer"
     />
   );
-};
+}

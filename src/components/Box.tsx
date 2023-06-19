@@ -1,4 +1,4 @@
-import { BoxProps } from "../models/interfaces/words.interface";
+import { BoxProps } from "../models/interfaces/wordle.interface";
 
 export function Box({
   word,

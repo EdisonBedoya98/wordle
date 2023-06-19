@@ -1,6 +1,6 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { WordsService } from "./words.service";
-import { LetterBox, WordsData } from "../../models/interfaces/words.interface";
+import { LetterBox, WordsData } from "../../models/interfaces/wordle.interface";
 /* import {
   Monster,
   MonsterWinner,

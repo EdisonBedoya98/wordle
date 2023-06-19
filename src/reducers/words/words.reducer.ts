@@ -11,7 +11,7 @@ import {
   showStatisticsModal,
   validateWord,
 } from "./words.actions";
-import { WordsState } from "../../models/interfaces/words.interface";
+import { WordsState } from "../../models/interfaces/wordle.interface";
 import { WORDLENGTH } from "../../constants/contants";
 
 const initialState: WordsState = {

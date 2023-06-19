@@ -29,3 +29,16 @@ export interface WordsState {
   alreadyAskedWords: string[];
 }
 export type ColorBox = "green" | "yellow" | "gray" | "default";
+
+export interface KeyProps {
+  value: string;
+  onClick: (value: string) => void;
+  children?: React.ReactNode;
+}
+export interface PopUpProps {
+  children: React.ReactNode;
+}
+
+export interface StatisticsPopUpProps {
+  onClose: () => void;
+}

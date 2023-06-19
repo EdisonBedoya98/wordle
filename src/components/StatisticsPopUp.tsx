@@ -9,11 +9,9 @@ import {
 import { Button } from "./Button";
 import { PopUp } from "./PopUp";
 import { CountdownTimer } from "./CountDownTimer";
+import { StatisticsPopUpProps } from "../models/interfaces/wordle.interface";
 
-interface PopUpProps {
-  onClose: () => void;
-}
-export function StatisticsPopUp({ onClose }: PopUpProps) {
+export function StatisticsPopUp({ onClose }: StatisticsPopUpProps) {
   const selectedNumberOfVictories = useSelector(selectNumberOfVictories);
   const selectedNumberOfMatches = useSelector(selectNumberOfMatches);
   const timeOfLastUpdate = useSelector(selectTimeOfLastUpdate);

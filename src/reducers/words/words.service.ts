@@ -1,4 +1,4 @@
-import { WordsData } from "../../models/interfaces/words.interface";
+import { WordsData } from "../../models/interfaces/wordle.interface";
 
 const getAllWords = async (): Promise<WordsData> =>
   await fetch(`data/filtered_words.json`, {}).then((response) =>
