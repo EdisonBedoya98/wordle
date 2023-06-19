@@ -1,12 +1,17 @@
 import { createReducer } from "@reduxjs/toolkit";
 
-import { fetchWordsData, setAWordRandomly } from "./words.actions";
+import {
+  fetchWordsData,
+  setAWordRandomly,
+  showHowToPlayModal,
+} from "./words.actions";
 
 interface WordsState {
   words: string[];
   currentWord: string | null;
   loading: boolean;
   error: null | unknown;
+  showHowToPlayModal: boolean;
   /*  selectedMonster: Monster | null;
   selectedMachineMonster: Monster | null;
   winner: MonsterWinner | null; */
@@ -17,6 +22,7 @@ const initialState: WordsState = {
   currentWord: null,
   loading: false,
   error: null,
+  showHowToPlayModal: false,
   /* selectedMonster: null,
   selectedMachineMonster: null,
   winner: null, */
@@ -58,4 +64,8 @@ export const wordsReducer = createReducer(initialState, (builder) => {
       currentWord: randomWord,
     };
   });
+  builder.addCase(showHowToPlayModal, (state, action) => ({
+    ...state,
+    showHowToPlayModal: action.payload,
+  }));
 });

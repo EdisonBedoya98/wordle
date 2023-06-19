@@ -26,6 +26,10 @@ export const fetchWordsData = createAsyncThunk<WordsData>(
 
 export const setAWordRandomly = createAction("words/setAWordRandomly");
 
+export const showHowToPlayModal = createAction<boolean>(
+  "words/showHowToPlayModal"
+);
+
 /* export const setMachineMonsterRandomly = createAction(
   "monsters/setMachineMonsterRandomly"
 );

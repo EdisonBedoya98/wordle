@@ -13,40 +13,48 @@ import {
 import {
   fetchWordsData,
   setAWordRandomly,
+  showHowToPlayModal,
 } from "../reducers/words/words.actions";
 import {
   selectCurrentWord,
+  selectShowHowToPlayModal,
   selectWords,
 } from "../reducers/words/words.selectors";
+import { useLocalStorage } from "./useLocalStorage";
 
 export function useWords() {
   const dispatch = useAppDispatch();
   const currentWord = useSelector(selectCurrentWord);
   const settledWords = useSelector(selectWords);
-  /*  const monsters = useSelector(selectMonsters);
-  const selectedMonster = useSelector(selectSelectedMonster);
-  const selectedMachineMonster = useSelector(selectSelectedMachineMonster); */
+  const selectedShowHowToPlayModal = useSelector(selectShowHowToPlayModal);
+  const { isKeyInLocalStorage, setLocalStorageItem } = useLocalStorage();
 
   useEffect(() => {
-    console.log("Fetching words data");
-
     dispatch(fetchWordsData());
+    const isFisrtTime = validateIfIsTheFirstTimeUserHasVisitedTheGame();
+    isFisrtTime && setShowHowToPlayModal(true);
   }, []);
 
   useEffect(() => {
-    console.log("Setting a word randomly");
-
     dispatch(setAWordRandomly());
   }, [settledWords]);
 
-  /*   useEffect(() => {
-    dispatch(setMachineMonsterRandomly());
-  }, [selectedMonster]); */
+  const validateIfIsTheFirstTimeUserHasVisitedTheGame = () => {
+    if (!isKeyInLocalStorage("firstTime")) {
+      setLocalStorageItem("firstTime", "false");
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const setShowHowToPlayModal = (show: boolean) => {
+    dispatch(showHowToPlayModal(show));
+  };
 
   return {
-    /*    monsters,
-    selectedMonster,
-    selectedMachineMonster, */
     currentWord,
+    selectedShowHowToPlayModal,
+    setShowHowToPlayModal,
   };
 }

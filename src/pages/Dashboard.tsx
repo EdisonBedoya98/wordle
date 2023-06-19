@@ -12,7 +12,8 @@ export function Dashboard() {
   const [isShowHowToPlay, setisShowHowToPlay] = useState(false);
   const [isShowStatistics, setisShowStatistics] = useState(false);
 
-  const { currentWord } = useWords();
+  const { currentWord, selectedShowHowToPlayModal, setShowHowToPlayModal } =
+    useWords();
 
   return (
     <section className="w-full  grid dark:bg-dark-background dark:text-white justify-center min-w-fit">
@@ -50,8 +51,8 @@ export function Dashboard() {
       {isShowStatistics && (
         <StatisticsPopUp onClose={() => setisShowStatistics(false)} />
       )}
-      {isShowHowToPlay && (
-        <HowToPlay onClose={() => setisShowHowToPlay(false)} />
+      {selectedShowHowToPlayModal && (
+        <HowToPlay onClose={() => setShowHowToPlayModal(false)} />
       )}
     </section>
   );
