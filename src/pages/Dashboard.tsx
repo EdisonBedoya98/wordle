@@ -71,7 +71,6 @@ export function Dashboard() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="light"
       />
     </section>
   );

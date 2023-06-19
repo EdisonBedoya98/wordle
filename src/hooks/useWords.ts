@@ -50,7 +50,6 @@ export function useWords() {
     );
     dispatch(selectRandomWordAndCleanDashboard());
     dispatch(setAWordRandomly());
-    //console.log("Timer triggered");
   };
 
   useEffect(() => {
@@ -70,8 +69,6 @@ export function useWords() {
     dispatch(showHowToPlayModal(show));
   };
   const setShowStatisticsModal = (show: boolean) => {
-    console.log("CERRANDOOO");
-
     dispatch(showStatisticsModal(show));
   };
 
