@@ -1,5 +1,6 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { WordsService } from "./words.service";
+import { WordsData } from "../../models/interfaces/words.interface";
 /* import {
   Monster,
   MonsterWinner,
@@ -17,7 +18,8 @@ export const startBattleRequest = createAsyncThunk<
 >("monsters/startBattleRequest", async (idMonsterSelect: startBattleParams) => {
   return MonsterService.startBattle(idMonsterSelect);
 }); */
-export const fetchWordsData = createAsyncThunk<string[]>(
+
+export const fetchWordsData = createAsyncThunk<WordsData>(
   "words/fetchWordsData",
   WordsService.getAllWords
 );

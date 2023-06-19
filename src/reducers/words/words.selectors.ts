@@ -1,6 +1,7 @@
 import { RootState } from "../../app/store";
 
 export const selectCurrentWord = (state: RootState) => state.words.currentWord;
+export const selectWords = (state: RootState) => state.words.words;
 
 /* export const selectSelectedMonster = (state: RootState) =>
   state.monsters.selectedMonster;

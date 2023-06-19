@@ -5,6 +5,8 @@ import { fetchWordsData, setAWordRandomly } from "./words.actions";
 interface WordsState {
   words: string[];
   currentWord: string | null;
+  loading: boolean;
+  error: null | unknown;
   /*  selectedMonster: Monster | null;
   selectedMachineMonster: Monster | null;
   winner: MonsterWinner | null; */
@@ -13,50 +15,47 @@ interface WordsState {
 const initialState: WordsState = {
   words: [],
   currentWord: null,
+  loading: false,
+  error: null,
   /* selectedMonster: null,
   selectedMachineMonster: null,
   winner: null, */
 };
 
 export const wordsReducer = createReducer(initialState, (builder) => {
-  builder.addCase(fetchWordsData.pending, (state) => {
-    console.log("Pending....");
-
-    return {
-      ...state,
-      monsters: [],
-    };
-  });
-
-  builder.addCase(fetchWordsData.rejected, (state) => ({
+  builder.addCase(fetchWordsData.pending, (state) => ({
     ...state,
-    monsters: [],
+    loading: true,
+    words: [],
   }));
 
-  builder.addCase(fetchWordsData.fulfilled, (state, action) => {
-    console.log("Fulfilled....");
+  builder.addCase(fetchWordsData.rejected, (state, action) => ({
+    ...state,
+    loading: false,
+    error: action.payload,
+    words: [],
+  }));
 
-    return {
-      ...state,
-      monsters: action.payload,
-    };
-  });
+  builder.addCase(fetchWordsData.fulfilled, (state, action) => ({
+    ...state,
+    words: action.payload.words,
+    error: null,
+    loading: false,
+  }));
 
   builder.addCase(setAWordRandomly, (state) => {
-    /*  if (state.selectedMonster === null)
-      return { ...state, selectedMachineMonster: null };
+    const { words } = state;
 
-    const avaibleMonsters = state.monsters.filter(
-      (monters) => monters.id !== state.selectedMonster?.id
-    );
+    if (words.length === 0) {
+      return { ...state, currentWord: null };
+    }
 
-    const randomIndex = Math.floor(Math.random() * avaibleMonsters.length);
-
-    const randomMonster = avaibleMonsters[randomIndex];
+    const randomIndex = Math.floor(Math.random() * words.length);
+    const randomWord = words[randomIndex];
 
     return {
       ...state,
-      selectedMachineMonster: randomMonster,
-    }; */
+      currentWord: randomWord,
+    };
   });
 });

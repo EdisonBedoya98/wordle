@@ -37,6 +37,7 @@ export function Dashboard() {
             <ThemeSwitcher />
           </div>
         </div>
+
         <div className="grid grid-cols-5 gap-3 max-w-[424px] mb-14 mx-auto ">
           {Array(25)
             .fill(1)

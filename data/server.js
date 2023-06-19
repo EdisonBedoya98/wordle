@@ -1,36 +1,37 @@
 import express from "express";
-import { readFile } from "fs/promises";
+import { createReadStream, createWriteStream } from "fs";
+import { createInterface } from "readline";
 
 const app = express();
 
-// Define the endpoint for the GET request
 app.get("/randomword", async (req, res) => {
-  const filePath = "./words.txt";
-  const { length } = req.query;
-
-  if (!length) {
-    return res.status(400).json({ error: "Missing query parameter: length" });
-  }
+  const sourceFilePath = "./words.txt";
+  const filteredFilePath = "./filtered_words.json";
 
   try {
-    // Read the TXT file asynchronously
-    const data = await readFile(filePath, "utf8");
+    const sourceStream = createReadStream(sourceFilePath);
+    const filteredStream = createWriteStream(filteredFilePath);
+    const rl = createInterface({ input: sourceStream });
 
-    // Split the content into an array of words
-    const words = data.split("\n");
+    const filteredWords = [];
 
-    // Filter the words with the specified length
-    const filteredWords = words.filter(
-      (word) => word.length === Number(length)
-    );
+    for await (const line of rl) {
+      const word = line.trim();
 
-    if (filteredWords.length === 0) {
-      return res
-        .status(404)
-        .json({ error: `No words found with length ${length}` });
+      if (/^[a-zA-Z]{5}$/.test(word)) {
+        filteredWords.push(word);
+      }
     }
 
-    // Select a random word from the filtered list
+    const filteredJSON = JSON.stringify({ words: filteredWords });
+
+    filteredStream.write(filteredJSON);
+    filteredStream.end();
+
+    if (filteredWords.length === 0) {
+      return res.status(404).json({ error: "No five-letter words found." });
+    }
+
     const randomIndex = Math.floor(Math.random() * filteredWords.length);
     const randomWord = filteredWords[randomIndex];
 

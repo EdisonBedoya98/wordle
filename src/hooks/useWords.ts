@@ -14,18 +14,30 @@ import {
   fetchWordsData,
   setAWordRandomly,
 } from "../reducers/words/words.actions";
-import { selectCurrentWord } from "../reducers/words/words.selectors";
+import {
+  selectCurrentWord,
+  selectWords,
+} from "../reducers/words/words.selectors";
 
 export function useWords() {
   const dispatch = useAppDispatch();
   const currentWord = useSelector(selectCurrentWord);
+  const settledWords = useSelector(selectWords);
   /*  const monsters = useSelector(selectMonsters);
   const selectedMonster = useSelector(selectSelectedMonster);
   const selectedMachineMonster = useSelector(selectSelectedMachineMonster); */
 
   useEffect(() => {
+    console.log("Fetching words data");
+
     dispatch(fetchWordsData());
   }, []);
+
+  useEffect(() => {
+    console.log("Setting a word randomly");
+
+    dispatch(setAWordRandomly());
+  }, [settledWords]);
 
   /*   useEffect(() => {
     dispatch(setMachineMonsterRandomly());

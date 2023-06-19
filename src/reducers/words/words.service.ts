@@ -1,7 +1,7 @@
-import { API_URL } from "../../constants/env";
+import { WordsData } from "../../models/interfaces/words.interface";
 
-const getAllWords = async (): Promise<string[]> =>
-  await fetch(`${API_URL}/randomword?length=5`, {}).then((response) =>
+const getAllWords = async (): Promise<WordsData> =>
+  await fetch(`data/filtered_words.json`, {}).then((response) =>
     response.json()
   );
 
