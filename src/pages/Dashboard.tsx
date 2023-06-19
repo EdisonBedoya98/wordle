@@ -6,15 +6,17 @@ import { Keyboard } from "../components/KeyBoard";
 import { ThemeSwitcher } from "../components/ThemeSwitcher";
 import { StatisticsPopUp } from "../components/StatisticsPopUp";
 import { HowToPlay } from "../components/HowToPlay";
-import { useState } from "react";
 import { useWords } from "../hooks/useWords";
 import { useGame } from "../hooks/useGame";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export function Dashboard() {
-  const [isShowStatistics, setisShowStatistics] = useState(false);
-
-  const { selectedShowHowToPlayModal, setShowHowToPlayModal } = useWords();
+  const {
+    selectedShowHowToPlayModal,
+    setShowHowToPlayModal,
+    setShowStatisticsModal,
+    selectedShowStatisticsModal,
+  } = useWords();
   const { selectedLettersDashboard } = useGame();
 
   return (
@@ -35,7 +37,7 @@ export function Dashboard() {
               src={equalizerLogo}
               alt="Equalizer"
               className="cursor-pointer dark:invert "
-              onClick={() => setisShowStatistics(true)}
+              onClick={() => setShowStatisticsModal(true)}
             />
             <ThemeSwitcher />
           </div>
@@ -53,8 +55,8 @@ export function Dashboard() {
         </div>
         <Keyboard />
       </div>
-      {isShowStatistics && (
-        <StatisticsPopUp onClose={() => setisShowStatistics(false)} />
+      {selectedShowStatisticsModal && (
+        <StatisticsPopUp onClose={() => setShowStatisticsModal(false)} />
       )}
       {selectedShowHowToPlayModal && (
         <HowToPlay onClose={() => setShowHowToPlayModal(false)} />

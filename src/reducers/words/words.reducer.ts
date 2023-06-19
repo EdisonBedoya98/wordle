@@ -4,8 +4,11 @@ import {
   addNewLetterToDashboard,
   fetchWordsData,
   removeLetterOfTheDashboard,
+  selectRandomWordAndCleanDashboard,
   setAWordRandomly,
+  setTimeUpdatedRandomWordAndCleanDashboard,
   showHowToPlayModal,
+  showStatisticsModal,
   validateWord,
 } from "./words.actions";
 import { WordsState } from "../../models/interfaces/words.interface";
@@ -13,18 +16,20 @@ import { WORDLENGTH } from "../../constants/contants";
 
 const initialState: WordsState = {
   dictionary: [],
-  currentWordFromDictionary: null,
-  lettersDashboard: Array(25).fill({
-    letter: "",
-    color: "default",
-  }),
+  currentRandomWordFromDictionary: null,
+  lettersDashboard: Array(25).fill({ letter: "" }),
   currentWordAddingToDashboard: "",
-  currentRowDashboard: 0,
   currentIndexDashboard: 0,
+  numberOfMatches: 0,
+  numberOfVictories: 0,
   isGameOver: false,
   loading: false,
   error: null,
   showHowToPlayModal: false,
+  showStatisticsModal: false,
+  showRandomWordToPlayer: false,
+  timeOfLastUpdate: new Date().toISOString(),
+  alreadyAskedWords: [],
 };
 
 export const wordsReducer = createReducer(initialState, (builder) => {
@@ -52,19 +57,54 @@ export const wordsReducer = createReducer(initialState, (builder) => {
     ...state,
     showHowToPlayModal: action.payload,
   }));
-  builder.addCase(setAWordRandomly, (state) => {
-    const { dictionary: words } = state;
 
-    if (words.length === 0) {
-      return { ...state, currentWordFromDictionary: null };
+  builder.addCase(showStatisticsModal, (state, action) => ({
+    ...state,
+    showStatisticsModal: action.payload,
+  }));
+
+  builder.addCase(
+    setTimeUpdatedRandomWordAndCleanDashboard,
+    (state, action) => ({
+      ...state,
+      timeOfLastUpdate: action.payload,
+    })
+  );
+
+  builder.addCase(selectRandomWordAndCleanDashboard, (state) => ({
+    ...state,
+    lettersDashboard: Array(25).fill({ letter: "" }),
+    currentWordAddingToDashboard: "",
+    currentIndexDashboard: 0,
+  }));
+
+  builder.addCase(setAWordRandomly, (state) => {
+    const { dictionary, alreadyAskedWords } = state;
+
+    if (dictionary.length === 0) {
+      return { ...state, currentRandomWordFromDictionary: null };
     }
 
-    const randomIndex = Math.floor(Math.random() * words.length);
-    const randomWord = words[randomIndex];
+    //    const randomIndex = Math.floor(Math.random() * words.length);
+
+    let randomWord = "";
+
+    /* console.log(
+      "🚀 ~ file: words.reducer.ts:93 ~ builder.addCase ~ alreadyAskedWords:",
+      alreadyAskedWords.join(",")
+    ); */
+    while (alreadyAskedWords.includes(randomWord) || randomWord === "") {
+      const randomIndex = Math.floor(Math.random() * dictionary.length);
+      const randomWordAux = dictionary[randomIndex];
+      randomWord = randomWordAux;
+
+      //console.log("Entraaaa");
+    }
 
     return {
       ...state,
-      currentWordFromDictionary: randomWord.toUpperCase(),
+      currentRandomWordFromDictionary: randomWord.toUpperCase(),
+      alreadyAskedWords: [...alreadyAskedWords, randomWord.toUpperCase()],
     };
   });
 
@@ -94,6 +134,7 @@ export const wordsReducer = createReducer(initialState, (builder) => {
       currentIndexDashboard: currentIndexDashboard + 1,
     };
   });
+
   builder.addCase(removeLetterOfTheDashboard, (state) => {
     const {
       lettersDashboard,
@@ -102,11 +143,8 @@ export const wordsReducer = createReducer(initialState, (builder) => {
     } = state;
 
     const isAllowedToDeleteLetter = currentWordAddingToDashboard.length > 0;
-    if (!isAllowedToDeleteLetter) {
-      console.log("not allowed");
+    if (!isAllowedToDeleteLetter) return state;
 
-      return state;
-    }
     const updatedDashboard = lettersDashboard.map((letter) => ({ ...letter }));
     updatedDashboard[currentIndexDashboard - 1] = { letter: "" };
 
@@ -120,26 +158,35 @@ export const wordsReducer = createReducer(initialState, (builder) => {
 
   builder.addCase(validateWord, (state) => {
     const {
+      numberOfMatches,
+      numberOfVictories,
       lettersDashboard,
-      currentWordFromDictionary,
+      currentRandomWordFromDictionary,
       currentIndexDashboard,
       currentWordAddingToDashboard,
     } = state;
 
-    console.log(
-      "🚀 ~ file: words.reducer.ts:119 ~ builder.addCase ~ currentWord:",
-      currentWordFromDictionary
-    );
     const lettersDashboardUpdated = lettersDashboard.map((letter) => ({
       ...letter,
     }));
-    console.log(
-      "🚀 ~ file: words.reducer.ts:148 ~ builder.addCase ~ lettersDashboardUpdated:",
-      lettersDashboardUpdated
-    );
-    if (currentWordFromDictionary === currentWordAddingToDashboard) {
-      console.log("SON IGUALESSS. GAME OVER");
-      //It shoudl paint of green the whole word
+
+    const areWordsInBoxesAndCurrentWordDictionaryEqual =
+      currentRandomWordFromDictionary === currentWordAddingToDashboard;
+    const isLostGame =
+      currentIndexDashboard === lettersDashboard.length &&
+      !areWordsInBoxesAndCurrentWordDictionaryEqual;
+
+    if (isLostGame) {
+      console.log("GAME OVER, YOU LOSE");
+      return {
+        ...state,
+        isGameOver: true,
+        numberOfMatches: numberOfMatches + 1,
+        showStatisticsModal: true,
+        showRandomWordToPlayer: true,
+      };
+    } else if (areWordsInBoxesAndCurrentWordDictionaryEqual) {
+      console.log("SON IGUALESSS. GAME OVER, YOU WIN");
       for (
         let i = currentIndexDashboard - WORDLENGTH;
         i < currentIndexDashboard;
@@ -147,40 +194,25 @@ export const wordsReducer = createReducer(initialState, (builder) => {
       ) {
         lettersDashboardUpdated[i].color = "green";
       }
-
       return {
         ...state,
         lettersDashboard: lettersDashboardUpdated,
+        numberOfMatches: numberOfMatches + 1,
+        numberOfVictories: numberOfVictories + 1,
         isGameOver: true,
+        showStatisticsModal: true,
       };
     } else {
-      currentWordAddingToDashboard.split("").forEach((letter, index) => {
-        console.log(
-          "🚀 ~ file: words.reducer.ts:161 ~ currentWordAddingToDashboard.split ~ letter:",
-          letter
-        );
-        console.log(
-          "🚀 ~ file: words.reducer.ts:188 ~ currentWordAddingToDashboard.split ~ currentWordFromDictionary:",
-          currentWordFromDictionary
-        );
-        console.log(
-          "🚀 ~ file: words.reducer.ts:170 ~ currentWordAddingToDashboard.split ~ currentWordFromDictionary?.includes(letter):",
-          currentWordFromDictionary?.includes(letter.toUpperCase())
-        );
-        if (letter === currentWordFromDictionary?.[index]) {
+      currentWordAddingToDashboard.split("")?.forEach((letter, index) => {
+        if (letter === currentRandomWordFromDictionary?.[index]) {
           lettersDashboardUpdated[
             currentIndexDashboard - WORDLENGTH + index
           ].color = "green";
-        } else if (currentWordFromDictionary?.includes(letter)) {
+        } else if (currentRandomWordFromDictionary?.includes(letter)) {
           lettersDashboardUpdated[
             currentIndexDashboard - WORDLENGTH + index
           ].color = "yellow";
         } else {
-          console.log(
-            "Validando...",
-            lettersDashboardUpdated[currentIndexDashboard - WORDLENGTH + index]
-              .color
-          );
           lettersDashboardUpdated[
             currentIndexDashboard - WORDLENGTH + index
           ].color = "gray";
@@ -189,6 +221,7 @@ export const wordsReducer = createReducer(initialState, (builder) => {
       return {
         ...state,
         lettersDashboard: lettersDashboardUpdated,
+        currentWordAddingToDashboard: "",
       };
     }
   });

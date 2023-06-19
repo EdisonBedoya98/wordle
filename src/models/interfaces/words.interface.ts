@@ -13,14 +13,19 @@ export interface LetterBox {
 }
 export interface WordsState {
   dictionary: string[];
-  currentWordFromDictionary: string | null;
+  currentRandomWordFromDictionary: string | null;
   lettersDashboard: LetterBox[];
   currentWordAddingToDashboard: string;
   isGameOver: boolean;
-  currentRowDashboard: number;
+  numberOfVictories: number;
+  numberOfMatches: number;
   currentIndexDashboard: number;
   loading: boolean;
   error: null | unknown;
   showHowToPlayModal: boolean;
+  showStatisticsModal: boolean;
+  showRandomWordToPlayer: boolean;
+  timeOfLastUpdate: string;
+  alreadyAskedWords: string[];
 }
 export type ColorBox = "green" | "yellow" | "gray" | "default";

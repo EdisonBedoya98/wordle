@@ -4,21 +4,27 @@ import { useSelector } from "react-redux";
 
 import {
   fetchWordsData,
+  selectRandomWordAndCleanDashboard,
   setAWordRandomly,
+  setTimeUpdatedRandomWordAndCleanDashboard,
   showHowToPlayModal,
+  showStatisticsModal,
 } from "../reducers/words/words.actions";
 import {
   selectShowHowToPlayModal,
   selectDictionary,
   selectCurrentWordAddingToDashboard,
+  selectShowStatisticsModal,
 } from "../reducers/words/words.selectors";
 import { useLocalStorage } from "./useLocalStorage";
+import { TIMEINTERVALTOUPDATEWORD } from "../constants/contants";
 
 export function useWords() {
   const dispatch = useAppDispatch();
 
-  const settledWords = useSelector(selectDictionary);
+  const settledDictionary = useSelector(selectDictionary);
   const selectedShowHowToPlayModal = useSelector(selectShowHowToPlayModal);
+  const selectedShowStatisticsModal = useSelector(selectShowStatisticsModal);
   const selectedCurrentWordAddingToDashboard = useSelector(
     selectCurrentWordAddingToDashboard
   );
@@ -31,8 +37,25 @@ export function useWords() {
   }, []);
 
   useEffect(() => {
+    const timerId = setInterval(
+      selectAnotherWordAndCleanDashboard,
+      TIMEINTERVALTOUPDATEWORD
+    );
+    return () => clearInterval(timerId);
+  }, []);
+
+  const selectAnotherWordAndCleanDashboard = () => {
+    dispatch(
+      setTimeUpdatedRandomWordAndCleanDashboard(new Date().toISOString())
+    );
+    dispatch(selectRandomWordAndCleanDashboard());
     dispatch(setAWordRandomly());
-  }, [settledWords]);
+    //console.log("Timer triggered");
+  };
+
+  useEffect(() => {
+    settledDictionary.length && dispatch(setAWordRandomly());
+  }, [settledDictionary]);
 
   const validateIfIsTheFirstTimeUserHasVisitedTheGame = () => {
     if (!isKeyInLocalStorage("firstTime")) {
@@ -46,10 +69,17 @@ export function useWords() {
   const setShowHowToPlayModal = (show: boolean) => {
     dispatch(showHowToPlayModal(show));
   };
+  const setShowStatisticsModal = (show: boolean) => {
+    console.log("CERRANDOOO");
+
+    dispatch(showStatisticsModal(show));
+  };
 
   return {
     selectedShowHowToPlayModal,
-    selectedCurrentWordAddingToDashboard,
     setShowHowToPlayModal,
+    setShowStatisticsModal,
+    selectedShowStatisticsModal,
+    selectedCurrentWordAddingToDashboard,
   };
 }

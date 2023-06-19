@@ -29,6 +29,9 @@ export const setAWordRandomly = createAction("words/setAWordRandomly");
 export const showHowToPlayModal = createAction<boolean>(
   "words/showHowToPlayModal"
 );
+export const showStatisticsModal = createAction<boolean>(
+  "words/showStatisticsModal"
+);
 export const addNewLetterToDashboard = createAction<LetterBox>(
   "words/addNewLetterToDashboard"
 );
@@ -36,6 +39,13 @@ export const removeLetterOfTheDashboard = createAction(
   "words/removeLetterOfTheDashboard"
 );
 export const validateWord = createAction("words/validateWord");
+
+export const selectRandomWordAndCleanDashboard = createAction(
+  "words/selectAnotherWordAndCleanDashboard"
+);
+export const setTimeUpdatedRandomWordAndCleanDashboard = createAction<string>(
+  "words/setTimeUpdateRandomWordAndCleanDashboard"
+);
 
 /* export const setMachineMonsterRandomly = createAction(
   "monsters/setMachineMonsterRandomly"
