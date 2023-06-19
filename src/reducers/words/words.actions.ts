@@ -29,6 +29,12 @@ export const setAWordRandomly = createAction("words/setAWordRandomly");
 export const showHowToPlayModal = createAction<boolean>(
   "words/showHowToPlayModal"
 );
+export const addNewLetterToDashboard = createAction<string>(
+  "words/addNewLetterToDashboard"
+);
+export const removeLetterOfTheDashboard = createAction(
+  "words/removeLetterOfTheDashboard"
+);
 
 /* export const setMachineMonsterRandomly = createAction(
   "monsters/setMachineMonsterRandomly"

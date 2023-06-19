@@ -8,12 +8,12 @@ import { StatisticsPopUp } from "../components/StatisticsPopUp";
 import { HowToPlay } from "../components/HowToPlay";
 import { useState } from "react";
 import { useWords } from "../hooks/useWords";
+import { useGame } from "../hooks/useGame";
 export function Dashboard() {
-  const [isShowHowToPlay, setisShowHowToPlay] = useState(false);
   const [isShowStatistics, setisShowStatistics] = useState(false);
 
-  const { currentWord, selectedShowHowToPlayModal, setShowHowToPlayModal } =
-    useWords();
+  const { selectedShowHowToPlayModal, setShowHowToPlayModal } = useWords();
+  const { selectedLettersDashboard, addNewLetterToTheDashboard } = useGame();
 
   return (
     <section className="w-full  grid dark:bg-dark-background dark:text-white justify-center min-w-fit">
@@ -23,7 +23,7 @@ export function Dashboard() {
             src={helpLogo}
             alt="Help"
             className="cursor-pointer dark:invert "
-            onClick={() => setisShowHowToPlay(true)}
+            onClick={() => setShowHowToPlayModal(true)}
           />
           <h1 className="font-semibold text-[40px] ml-10 dark:text-[#E5E5E5]">
             WORDLE
@@ -40,11 +40,14 @@ export function Dashboard() {
         </div>
 
         <div className="grid grid-cols-5 gap-3 max-w-[424px] mb-14 mx-auto ">
-          {Array(25)
+          {/*  {Array(25)
             .fill(1)
             .map((_, index) => (
               <Box key={index} word="G" color="green" textColor="white" />
-            ))}
+            ))} */}
+          {selectedLettersDashboard.map((letter, index) => (
+            <Box key={index} word={letter} color="green" textColor="white" />
+          ))}
         </div>
         <Keyboard />
       </div>

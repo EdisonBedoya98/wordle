@@ -1,7 +1,9 @@
 import { createReducer } from "@reduxjs/toolkit";
 
 import {
+  addNewLetterToDashboard,
   fetchWordsData,
+  removeLetterOfTheDashboard,
   setAWordRandomly,
   showHowToPlayModal,
 } from "./words.actions";
@@ -9,6 +11,7 @@ import {
 interface WordsState {
   words: string[];
   currentWord: string | null;
+  lettersDashboard: string[];
   loading: boolean;
   error: null | unknown;
   showHowToPlayModal: boolean;
@@ -20,6 +23,7 @@ interface WordsState {
 const initialState: WordsState = {
   words: [],
   currentWord: null,
+  lettersDashboard: [],
   loading: false,
   error: null,
   showHowToPlayModal: false,
@@ -49,6 +53,10 @@ export const wordsReducer = createReducer(initialState, (builder) => {
     loading: false,
   }));
 
+  builder.addCase(showHowToPlayModal, (state, action) => ({
+    ...state,
+    showHowToPlayModal: action.payload,
+  }));
   builder.addCase(setAWordRandomly, (state) => {
     const { words } = state;
 
@@ -64,8 +72,20 @@ export const wordsReducer = createReducer(initialState, (builder) => {
       currentWord: randomWord,
     };
   });
-  builder.addCase(showHowToPlayModal, (state, action) => ({
+
+  builder.addCase(addNewLetterToDashboard, (state, action) => {
+    console.log("addNewLetterToDashboard");
+
+    if (state.lettersDashboard.length % 5) {
+      console.log("5 letters");
+    }
+    return {
+      ...state,
+      lettersDashboard: [...state.lettersDashboard, action.payload],
+    };
+  });
+  builder.addCase(removeLetterOfTheDashboard, (state) => ({
     ...state,
-    showHowToPlayModal: action.payload,
+    lettersDashboard: state.lettersDashboard.slice(0, -1),
   }));
 });

@@ -5,14 +5,19 @@ import {
 } from "../constants/keyboardkeys";
 import deleteButtonLogo from "../assets/delete.svg";
 import { Key } from "./Key";
+import { useAppDispatch } from "../app/hooks";
+import { addNewLetterToDashboard } from "../reducers/words/words.actions";
 
 export const Keyboard = () => {
+  const dispatch = useAppDispatch();
+
   const handleKeyPress = (key: string) => {
     if (key === "Delete") {
       alert("Delete");
     } else if (key === "Enter") {
       alert("Enter");
     } else {
+      dispatch(addNewLetterToDashboard(key));
       console.log(`Pressed key: ${key}`);
     }
   };
