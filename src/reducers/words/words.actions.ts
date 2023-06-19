@@ -1,6 +1,6 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { WordsService } from "./words.service";
-import { WordsData } from "../../models/interfaces/words.interface";
+import { LetterBox, WordsData } from "../../models/interfaces/words.interface";
 /* import {
   Monster,
   MonsterWinner,
@@ -29,7 +29,7 @@ export const setAWordRandomly = createAction("words/setAWordRandomly");
 export const showHowToPlayModal = createAction<boolean>(
   "words/showHowToPlayModal"
 );
-export const addNewLetterToDashboard = createAction<string>(
+export const addNewLetterToDashboard = createAction<LetterBox>(
   "words/addNewLetterToDashboard"
 );
 export const removeLetterOfTheDashboard = createAction(

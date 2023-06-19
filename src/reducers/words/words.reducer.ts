@@ -7,29 +7,22 @@ import {
   setAWordRandomly,
   showHowToPlayModal,
 } from "./words.actions";
+import { LetterBox, WordsState } from "../../models/interfaces/words.interface";
 
-interface WordsState {
-  words: string[];
-  currentWord: string | null;
-  lettersDashboard: string[];
-  loading: boolean;
-  error: null | unknown;
-  showHowToPlayModal: boolean;
-  /*  selectedMonster: Monster | null;
-  selectedMachineMonster: Monster | null;
-  winner: MonsterWinner | null; */
-}
-
+const defaultLetterBoxDashboard: LetterBox = {
+  letter: "",
+  color: "gray",
+};
 const initialState: WordsState = {
   words: [],
   currentWord: null,
-  lettersDashboard: [],
+  lettersDashboard: Array(25).fill(defaultLetterBoxDashboard),
+  currentWordLength: 0,
+  currentRowDashboard: 0,
+  currentIndexDashboard: 0,
   loading: false,
   error: null,
   showHowToPlayModal: false,
-  /* selectedMonster: null,
-  selectedMachineMonster: null,
-  winner: null, */
 };
 
 export const wordsReducer = createReducer(initialState, (builder) => {
@@ -74,18 +67,43 @@ export const wordsReducer = createReducer(initialState, (builder) => {
   });
 
   builder.addCase(addNewLetterToDashboard, (state, action) => {
-    console.log("addNewLetterToDashboard");
+    const { lettersDashboard, currentWordLength, currentIndexDashboard } =
+      state;
 
-    if (state.lettersDashboard.length % 5) {
-      console.log("5 letters");
+    const isEnabledToAddNewLetter = currentWordLength < 5;
+
+    if (!isEnabledToAddNewLetter) {
+      console.log("IS NOT ALLOWED TO ADD NEW LETTER");
+
+      return state;
     }
+    const updatedDashboard = [...lettersDashboard];
+    updatedDashboard[currentIndexDashboard] = action.payload;
     return {
       ...state,
-      lettersDashboard: [...state.lettersDashboard, action.payload],
+      lettersDashboard: updatedDashboard,
+      currentWordLength: currentWordLength + 1,
+      currentIndexDashboard: currentIndexDashboard + 1,
     };
   });
-  builder.addCase(removeLetterOfTheDashboard, (state) => ({
-    ...state,
-    lettersDashboard: state.lettersDashboard.slice(0, -1),
-  }));
+  builder.addCase(removeLetterOfTheDashboard, (state) => {
+    const { lettersDashboard, currentIndexDashboard, currentWordLength } =
+      state;
+
+    const isAllowedToDeleteLetter = currentWordLength > 0;
+    if (!isAllowedToDeleteLetter) {
+      console.log("not allowed");
+
+      return state;
+    }
+    const updatedDashboard = [...lettersDashboard];
+    updatedDashboard[currentIndexDashboard - 1] = defaultLetterBoxDashboard;
+
+    return {
+      ...state,
+      lettersDashboard: updatedDashboard,
+      currentWordLength: currentWordLength - 1,
+      currentIndexDashboard: currentIndexDashboard - 1,
+    };
+  });
 });

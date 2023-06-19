@@ -13,7 +13,7 @@ export function Dashboard() {
   const [isShowStatistics, setisShowStatistics] = useState(false);
 
   const { selectedShowHowToPlayModal, setShowHowToPlayModal } = useWords();
-  const { selectedLettersDashboard, addNewLetterToTheDashboard } = useGame();
+  const { selectedLettersDashboard } = useGame();
 
   return (
     <section className="w-full  grid dark:bg-dark-background dark:text-white justify-center min-w-fit">
@@ -40,13 +40,13 @@ export function Dashboard() {
         </div>
 
         <div className="grid grid-cols-5 gap-3 max-w-[424px] mb-14 mx-auto ">
-          {/*  {Array(25)
-            .fill(1)
-            .map((_, index) => (
-              <Box key={index} word="G" color="green" textColor="white" />
-            ))} */}
           {selectedLettersDashboard.map((letter, index) => (
-            <Box key={index} word={letter} color="green" textColor="white" />
+            <Box
+              key={index}
+              word={letter.letter}
+              color={letter.color}
+              textColor="white"
+            />
           ))}
         </div>
         <Keyboard />
