@@ -7,9 +7,12 @@ import { ThemeSwitcher } from "../components/ThemeSwitcher";
 import { StatisticsPopUp } from "../components/StatisticsPopUp";
 import { HowToPlay } from "../components/HowToPlay";
 import { useState } from "react";
+import { useWords } from "../hooks/useWords";
 export function Dashboard() {
   const [isShowHowToPlay, setisShowHowToPlay] = useState(false);
   const [isShowStatistics, setisShowStatistics] = useState(false);
+
+  const { currentWord } = useWords();
 
   return (
     <section className="w-full  grid dark:bg-dark-background dark:text-white justify-center min-w-fit">
