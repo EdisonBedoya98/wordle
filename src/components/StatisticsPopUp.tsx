@@ -39,7 +39,7 @@ export function StatisticsPopUp({ onClose }: StatisticsPopUpProps) {
       </div>
       {showRandomWordToPlayer && (
         <p className="mb-4">
-          La palabra era:
+          La palabra era:{" "}
           <span className="font-bold uppercase">
             {selectedPreviosAskedRandomWord}
           </span>
