@@ -2,10 +2,10 @@
 
 ### 🔥 Stack usado
 
-- ReactJS
-- Vite
-- Tailwind
-- Redux
+- [ReactJS](https://react.dev/) - Librería desarrollo web
+- [Vite](https://vitejs.dev/) - Herramientas para el frontend
+- [Tailwind](https://tailwindcss.com/) - Estilos
+- [Redux](https://redux-toolkit.js.org/) - Manejo del estado global
 
 Se hace uso de **ReactJs + Vite** debido a la flexibilidad que ofrece, comparados con frameworks como **NextJs** o **Gatsby** los cuales tienden ser más rígidos, ya que tienen arquitecturas ya definidas, además se hace uso de **Redux** para el manejo de estado global porque es una librería que permite escalar fácilmente y al tener la propiedad de que no muta el estado hace que sea mucho más fácil seguir la trazabilidad del estado, para los estilos se hace uso de Tailwind que nos ayuda de gran manera a manejar un estándar a nivel de estilo y nos evita uno de los mayores retos cuando se trabaja con **css** y es escribir nombres de clases, debido a que la labor de escribir buenos nombres es bastante compleja.
 
