@@ -15,6 +15,8 @@ import {
   selectDictionary,
   selectShowStatisticsModal,
   selectNumberOfMatches,
+  selectLoading,
+  selectIsError,
 } from "../reducers/words/wordle.selectors";
 import { useLocalStorage } from "./useLocalStorage";
 import { TIMEINTERVALTOUPDATEWORD } from "../constants/contants";
@@ -25,6 +27,8 @@ export function useWordle() {
   const settledDictionary = useSelector(selectDictionary);
   const selectedShowHowToPlayModal = useSelector(selectShowHowToPlayModal);
   const selectedShowStatisticsModal = useSelector(selectShowStatisticsModal);
+  const isLoading = useSelector(selectLoading);
+  const isError = useSelector(selectIsError);
   const numberOfMatches = useSelector(selectNumberOfMatches);
   const { isKeyInLocalStorage, setLocalStorageItem } = useLocalStorage();
 
@@ -80,5 +84,7 @@ export function useWordle() {
     setShowHowToPlayModal,
     setShowStatisticsModal,
     selectedShowStatisticsModal,
+    isLoading,
+    isError,
   };
 }

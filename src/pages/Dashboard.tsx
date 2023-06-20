@@ -10,15 +10,21 @@ import { useWordle } from "../hooks/useWordle";
 import { useGame } from "../hooks/useGame";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Loading } from "../components/Loading";
 export function Dashboard() {
   const {
     selectedShowHowToPlayModal,
     setShowHowToPlayModal,
     setShowStatisticsModal,
     selectedShowStatisticsModal,
+    isLoading,
+    isError,
   } = useWordle();
+
   const { selectedLettersDashboard } = useGame();
 
+  if (isLoading) return <Loading />;
+  if (isError) return <div>Something went wrong</div>;
   return (
     <section className="w-full  grid dark:bg-dark-background dark:text-white justify-center min-w-fit">
       <div className="max-w-[638px] pt-20 pb-44">

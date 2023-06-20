@@ -21,3 +21,5 @@ export const selectTimeOfLastUpdate = (state: RootState) =>
   state.words.timeOfLastUpdate;
 export const selectPreviosAskedRandomWord = (state: RootState) =>
   state.words.previosRandomWordAsked;
+export const selectLoading = (state: RootState) => state.words.loading;
+export const selectIsError = (state: RootState) => state.words.error;
