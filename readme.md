@@ -58,3 +58,10 @@ El diseño sigue las dimensiones que se definieron dentro del [Figma](https://ww
 ### 🎮 Juego
 
 Para poder acceder a la versión desplegada realiza clic [acá](https://teal-dodol-276981.netlify.app/)
+
+## Autor ✒️
+
+- **Edison Bedoya García** - _Desarrollo juego_ - [edison](https://github.com/EdisonBedoya98)
+
+La mente es el límite. Mientras que la mente puede imaginar el hecho de que puedes hacer algo, lo puedes hacer, siempre y cuando realmente lo crees 100 por ciento.
+_Arnold Schwarzenegger_
