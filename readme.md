@@ -15,7 +15,7 @@ El diseño sigue las dimensiones que se definieron dentro del Figma esto a nivel
 
 ### 📙 Diccionario de palabras
 
-####Decisiones tomadas
+#### Decisiones tomadas
 
 - Teniendo en cuenta el total de palabras que contiene el [diccionario](https://gitlab.com/d2945/words/-/raw/main/words.txt") que son **646.615**, basado en el requerimiento del juego solo se van a usar las palbras que contengan 5 letras y como el teclado que maneja el juego tampoco admite tildes se filtran las que cumplan estas condiciones y nos queda un diccionario dirigido para el juego con **8.080** palabras.
 
