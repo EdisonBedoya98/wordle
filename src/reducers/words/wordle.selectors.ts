@@ -19,3 +19,5 @@ export const selectShowRandomWordToPlayer = (state: RootState) =>
   state.words.showRandomWordToPlayer;
 export const selectTimeOfLastUpdate = (state: RootState) =>
   state.words.timeOfLastUpdate;
+export const selectPreviosAskedRandomWord = (state: RootState) =>
+  state.words.previosRandomWordAsked;

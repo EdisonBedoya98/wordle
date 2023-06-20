@@ -19,6 +19,7 @@ const initialState: WordsState = {
   currentRandomWordFromDictionary: null,
   lettersDashboard: Array(25).fill({ letter: "" }),
   currentWordAddingToDashboard: "",
+  previosRandomWordAsked: null,
   currentIndexDashboard: 0,
   numberOfMatches: 0,
   numberOfVictories: 0,
@@ -78,7 +79,8 @@ export const wordleReducer = createReducer(initialState, (builder) => {
   }));
 
   builder.addCase(setAWordRandomly, (state) => {
-    const { dictionary, alreadyAskedWords } = state;
+    const { dictionary, alreadyAskedWords, currentRandomWordFromDictionary } =
+      state;
 
     if (dictionary.length === 0) {
       return { ...state, currentRandomWordFromDictionary: null };
@@ -97,6 +99,7 @@ export const wordleReducer = createReducer(initialState, (builder) => {
 
     return {
       ...state,
+      previosRandomWordAsked: currentRandomWordFromDictionary,
       currentRandomWordFromDictionary: randomWord.toUpperCase(),
       alreadyAskedWords: [...alreadyAskedWords, randomWord.toUpperCase()],
     };

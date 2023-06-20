@@ -14,6 +14,7 @@ export interface LetterBox {
 export interface WordsState {
   dictionary: string[];
   currentRandomWordFromDictionary: string | null;
+  previosRandomWordAsked: string | null;
   lettersDashboard: LetterBox[];
   currentWordAddingToDashboard: string;
   numberOfVictories: number;

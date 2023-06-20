@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import {
-  selectCurrentRandomWordFromDictionary,
+  selectPreviosAskedRandomWord,
   selectNumberOfMatches,
   selectNumberOfVictories,
   selectShowRandomWordToPlayer,
@@ -8,7 +8,7 @@ import {
 } from "../reducers/words/wordle.selectors";
 import { Button } from "./Button";
 import { PopUp } from "./PopUp";
-import { CountdownTimer } from "./CountDownTimer";
+import { CountdownTimer } from "./CountdownTimer";
 import { StatisticsPopUpProps } from "../models/interfaces/wordle.interface";
 
 export function StatisticsPopUp({ onClose }: StatisticsPopUpProps) {
@@ -16,8 +16,8 @@ export function StatisticsPopUp({ onClose }: StatisticsPopUpProps) {
   const selectedNumberOfMatches = useSelector(selectNumberOfMatches);
   const timeOfLastUpdate = useSelector(selectTimeOfLastUpdate);
   const showRandomWordToPlayer = useSelector(selectShowRandomWordToPlayer);
-  const currentRandomWordFromDictionary = useSelector(
-    selectCurrentRandomWordFromDictionary
+  const selectedPreviosAskedRandomWord = useSelector(
+    selectPreviosAskedRandomWord
   );
 
   return (
@@ -39,9 +39,9 @@ export function StatisticsPopUp({ onClose }: StatisticsPopUpProps) {
       </div>
       {showRandomWordToPlayer && (
         <p className="mb-4">
-          La palabra era:{" "}
+          La palabra era:
           <span className="font-bold uppercase">
-            {currentRandomWordFromDictionary}
+            {selectedPreviosAskedRandomWord}
           </span>
         </p>
       )}
