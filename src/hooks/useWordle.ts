@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useAppDispatch } from "../app/hooks";
 import { useSelector } from "react-redux";
 
@@ -13,7 +13,6 @@ import {
 import {
   selectShowHowToPlayModal,
   selectDictionary,
-  selectCurrentWordAddingToDashboard,
   selectShowStatisticsModal,
   selectNumberOfMatches,
 } from "../reducers/words/wordle.selectors";
@@ -26,22 +25,15 @@ export function useWordle() {
   const settledDictionary = useSelector(selectDictionary);
   const selectedShowHowToPlayModal = useSelector(selectShowHowToPlayModal);
   const selectedShowStatisticsModal = useSelector(selectShowStatisticsModal);
-  const selectedCurrentWordAddingToDashboard = useSelector(
-    selectCurrentWordAddingToDashboard
-  );
   const numberOfMatches = useSelector(selectNumberOfMatches);
   const { isKeyInLocalStorage, setLocalStorageItem } = useLocalStorage();
-  const isInitializedGameRef = useRef(false);
 
   useEffect(() => {
-    if (settledDictionary.length && !isInitializedGameRef.current) {
-      settledDictionary.length && dispatch(setAWordRandomly());
-      isInitializedGameRef.current = true;
-    }
+    settledDictionary.length && dispatch(setAWordRandomly());
   }, [settledDictionary]);
 
   useEffect(() => {
-    isInitializedGameRef && selectAnotherWordAndCleanDashboard();
+    numberOfMatches && selectAnotherWordAndCleanDashboard();
   }, [numberOfMatches]);
 
   useEffect(() => {
@@ -63,6 +55,7 @@ export function useWordle() {
       setTimeUpdatedRandomWordAndCleanDashboard(new Date().toISOString())
     );
     dispatch(clearGame());
+
     dispatch(setAWordRandomly());
   };
 
@@ -87,6 +80,5 @@ export function useWordle() {
     setShowHowToPlayModal,
     setShowStatisticsModal,
     selectedShowStatisticsModal,
-    selectedCurrentWordAddingToDashboard,
   };
 }

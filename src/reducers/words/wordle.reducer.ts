@@ -192,6 +192,7 @@ export const wordleReducer = createReducer(initialState, (builder) => {
         numberOfMatches: numberOfMatches + 1,
         numberOfVictories: numberOfVictories + 1,
         showStatisticsModal: true,
+        showRandomWordToPlayer: false,
       };
     } else {
       currentWordAddingToDashboard.split("")?.forEach((letter, index) => {
@@ -213,6 +214,7 @@ export const wordleReducer = createReducer(initialState, (builder) => {
         ...state,
         lettersDashboard: lettersDashboardUpdated,
         currentWordAddingToDashboard: "",
+        showRandomWordToPlayer: false,
       };
     }
   });
