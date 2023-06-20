@@ -11,7 +11,7 @@ Se hace uso de **ReactJs + Vite** debido a la flexibilidad que ofrece, comparado
 
 ### 🎨 Diseño
 
-El diseño sigue las dimensiones que se definieron dentro del Figma esto a nivel de pixel, tambien se usa **Roboto** como fuente principal, la cual se configura a nivel de proyecto y se implementa el modo oscuro.
+El diseño sigue las dimensiones que se definieron dentro del [Figma](https://www.figma.com/file/1ItfWDdmg93m4yfj0BAvCn/DD3-Worlde?node-id=0%3A1) esto a nivel de pixel, tambien se usa **Roboto** como fuente principal, la cual se configura a nivel de proyecto y se implementa el modo oscuro.
 
 ### 📙 Diccionario de palabras
 
