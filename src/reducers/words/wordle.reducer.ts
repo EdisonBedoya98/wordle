@@ -92,10 +92,6 @@ export const wordleReducer = createReducer(initialState, (builder) => {
       const randomWordAux = dictionary[randomIndex];
       randomWord = randomWordAux;
     }
-    console.log(
-      "🚀 ~ file: wordle.reducer.ts:88 ~ builder.addCase ~ randomWord:",
-      randomWord
-    );
 
     return {
       ...state,
