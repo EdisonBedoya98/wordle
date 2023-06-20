@@ -1,14 +1,12 @@
+import { HowToPlayProps } from "../models/interfaces/wordle.interface";
 import { Box } from "./Box";
 import { Button } from "./Button";
 import { PopUp } from "./PopUp";
 
-interface HowToPlayProps {
-  onClose: () => void;
-}
 export function HowToPlay({ onClose }: HowToPlayProps) {
   return (
     <PopUp>
-      <section className="grid max-w-lg  content-center">
+      <section className="grid max-w-lg content-center">
         <h1 className="text-center font-extrabold text-4xl mb-8">Cómo jugar</h1>
         <article className="grid gap-y-2 mb-4">
           <p>Adivina la palabra oculta en cinco intentos. </p>

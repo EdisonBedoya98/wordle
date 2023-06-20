@@ -16,7 +16,6 @@ export interface WordsState {
   currentRandomWordFromDictionary: string | null;
   lettersDashboard: LetterBox[];
   currentWordAddingToDashboard: string;
-  isGameOver: boolean;
   numberOfVictories: number;
   numberOfMatches: number;
   currentIndexDashboard: number;
@@ -28,6 +27,7 @@ export interface WordsState {
   timeOfLastUpdate: string;
   alreadyAskedWords: string[];
 }
+
 export type ColorBox = "green" | "yellow" | "gray" | "default";
 
 export interface KeyProps {
@@ -40,5 +40,19 @@ export interface PopUpProps {
 }
 
 export interface StatisticsPopUpProps {
+  onClose: () => void;
+}
+
+export interface CountdownTimerProps {
+  targetDate: string; // Target date in ISOString format
+}
+
+export interface ButtonProps {
+  content: string;
+  className?: string;
+  onClick?: () => void;
+}
+
+export interface HowToPlayProps {
   onClose: () => void;
 }

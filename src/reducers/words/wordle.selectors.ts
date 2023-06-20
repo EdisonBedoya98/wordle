@@ -19,11 +19,3 @@ export const selectShowRandomWordToPlayer = (state: RootState) =>
   state.words.showRandomWordToPlayer;
 export const selectTimeOfLastUpdate = (state: RootState) =>
   state.words.timeOfLastUpdate;
-
-/* export const selectSelectedMonster = (state: RootState) =>
-  state.monsters.selectedMonster;
-
-export const selectSelectedMachineMonster = (state: RootState) =>
-  state.monsters.selectedMachineMonster;
-
-export const selectedWinner = (state: RootState) => state.monsters.winner; */

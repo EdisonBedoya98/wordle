@@ -5,7 +5,7 @@ import {
   selectNumberOfVictories,
   selectShowRandomWordToPlayer,
   selectTimeOfLastUpdate,
-} from "../reducers/words/words.selectors";
+} from "../reducers/words/wordle.selectors";
 import { Button } from "./Button";
 import { PopUp } from "./PopUp";
 import { CountdownTimer } from "./CountDownTimer";

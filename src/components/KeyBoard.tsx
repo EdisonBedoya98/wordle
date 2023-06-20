@@ -6,6 +6,7 @@ import {
 import deleteButtonLogo from "../assets/delete.svg";
 import { Key } from "./Key";
 import { useKeyBoard } from "../hooks/useKeyBoard";
+import { DELETEKEY, ENTERKEY } from "../constants/contants";
 
 export const Keyboard = () => {
   const { handleKeyPress } = useKeyBoard();
@@ -22,11 +23,11 @@ export const Keyboard = () => {
         ))}
       </div>
       <div className="flex gap-x-2">
-        <Key value="Enter" onClick={handleKeyPress} />
+        <Key value={ENTERKEY} onClick={handleKeyPress} />
         {keyboardKeysThirdRow.map((value) => (
           <Key key={value} value={value} onClick={handleKeyPress} />
         ))}
-        <Key value="Delete" onClick={handleKeyPress}>
+        <Key value={DELETEKEY} onClick={handleKeyPress}>
           <img
             src={deleteButtonLogo}
             alt="Delete"

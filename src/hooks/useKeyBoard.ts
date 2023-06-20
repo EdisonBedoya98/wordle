@@ -1,20 +1,20 @@
 import { toast } from "react-toastify";
-import { WORDLENGTH } from "../constants/contants";
+import { DELETEKEY, ENTERKEY, WORDLENGTH } from "../constants/contants";
 import { useGame } from "./useGame";
-import { useWords } from "./useWords";
+import { useWordle } from "./useWordle";
 import { useAppDispatch } from "../app/hooks";
-import { validateWord } from "../reducers/words/words.actions";
+import { validateWord } from "../reducers/words/wordle.actions";
 
 export function useKeyBoard() {
   const { addNewLetterToTheDashboard, deleteLetterFromTheDashboard } =
     useGame();
-  const { selectedCurrentWordAddingToDashboard } = useWords();
+  const { selectedCurrentWordAddingToDashboard } = useWordle();
   const dispatch = useAppDispatch();
 
   const handleKeyPress = (key: string) => {
-    if (key === "Delete") {
+    if (key === DELETEKEY) {
       deleteLetterFromTheDashboard();
-    } else if (key === "Enter") {
+    } else if (key === ENTERKEY) {
       if (selectedCurrentWordAddingToDashboard.length === WORDLENGTH) {
         dispatch(validateWord());
       } else {

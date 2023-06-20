@@ -1,8 +1,5 @@
-interface ButtonProps {
-  content: string;
-  className?: string;
-  onClick?: () => void;
-}
+import { ButtonProps } from "../models/interfaces/wordle.interface";
+
 export function Button({ content, className, onClick }: ButtonProps) {
   return (
     <button

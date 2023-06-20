@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import {
   addNewLetterToDashboard,
   removeLetterOfTheDashboard,
-} from "../reducers/words/words.actions";
-import { selectLettersDashboard } from "../reducers/words/words.selectors";
+} from "../reducers/words/wordle.actions";
+import { selectLettersDashboard } from "../reducers/words/wordle.selectors";
 import { LetterBox } from "../models/interfaces/wordle.interface";
 
 export function useGame() {

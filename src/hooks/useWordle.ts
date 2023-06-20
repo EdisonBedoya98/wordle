@@ -1,25 +1,26 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useAppDispatch } from "../app/hooks";
 import { useSelector } from "react-redux";
 
 import {
   fetchWordsData,
-  selectRandomWordAndCleanDashboard,
+  clearGame,
   setAWordRandomly,
   setTimeUpdatedRandomWordAndCleanDashboard,
   showHowToPlayModal,
   showStatisticsModal,
-} from "../reducers/words/words.actions";
+} from "../reducers/words/wordle.actions";
 import {
   selectShowHowToPlayModal,
   selectDictionary,
   selectCurrentWordAddingToDashboard,
   selectShowStatisticsModal,
-} from "../reducers/words/words.selectors";
+  selectNumberOfMatches,
+} from "../reducers/words/wordle.selectors";
 import { useLocalStorage } from "./useLocalStorage";
 import { TIMEINTERVALTOUPDATEWORD } from "../constants/contants";
 
-export function useWords() {
+export function useWordle() {
   const dispatch = useAppDispatch();
 
   const settledDictionary = useSelector(selectDictionary);
@@ -28,7 +29,20 @@ export function useWords() {
   const selectedCurrentWordAddingToDashboard = useSelector(
     selectCurrentWordAddingToDashboard
   );
+  const numberOfMatches = useSelector(selectNumberOfMatches);
   const { isKeyInLocalStorage, setLocalStorageItem } = useLocalStorage();
+  const isInitializedGameRef = useRef(false);
+
+  useEffect(() => {
+    if (settledDictionary.length && !isInitializedGameRef.current) {
+      settledDictionary.length && dispatch(setAWordRandomly());
+      isInitializedGameRef.current = true;
+    }
+  }, [settledDictionary]);
+
+  useEffect(() => {
+    isInitializedGameRef && selectAnotherWordAndCleanDashboard();
+  }, [numberOfMatches]);
 
   useEffect(() => {
     dispatch(fetchWordsData());
@@ -48,13 +62,9 @@ export function useWords() {
     dispatch(
       setTimeUpdatedRandomWordAndCleanDashboard(new Date().toISOString())
     );
-    dispatch(selectRandomWordAndCleanDashboard());
+    dispatch(clearGame());
     dispatch(setAWordRandomly());
   };
-
-  useEffect(() => {
-    settledDictionary.length && dispatch(setAWordRandomly());
-  }, [settledDictionary]);
 
   const validateIfIsTheFirstTimeUserHasVisitedTheGame = () => {
     if (!isKeyInLocalStorage("firstTime")) {

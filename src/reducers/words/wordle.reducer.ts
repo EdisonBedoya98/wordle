@@ -4,13 +4,13 @@ import {
   addNewLetterToDashboard,
   fetchWordsData,
   removeLetterOfTheDashboard,
-  selectRandomWordAndCleanDashboard,
+  clearGame,
   setAWordRandomly,
   setTimeUpdatedRandomWordAndCleanDashboard,
   showHowToPlayModal,
   showStatisticsModal,
   validateWord,
-} from "./words.actions";
+} from "./wordle.actions";
 import { WordsState } from "../../models/interfaces/wordle.interface";
 import { WORDLENGTH } from "../../constants/contants";
 
@@ -22,7 +22,6 @@ const initialState: WordsState = {
   currentIndexDashboard: 0,
   numberOfMatches: 0,
   numberOfVictories: 0,
-  isGameOver: false,
   loading: false,
   error: null,
   showHowToPlayModal: false,
@@ -32,7 +31,7 @@ const initialState: WordsState = {
   alreadyAskedWords: [],
 };
 
-export const wordsReducer = createReducer(initialState, (builder) => {
+export const wordleReducer = createReducer(initialState, (builder) => {
   builder.addCase(fetchWordsData.pending, (state) => ({
     ...state,
     loading: true,
@@ -71,7 +70,7 @@ export const wordsReducer = createReducer(initialState, (builder) => {
     })
   );
 
-  builder.addCase(selectRandomWordAndCleanDashboard, (state) => ({
+  builder.addCase(clearGame, (state) => ({
     ...state,
     lettersDashboard: Array(25).fill({ letter: "" }),
     currentWordAddingToDashboard: "",
@@ -85,21 +84,16 @@ export const wordsReducer = createReducer(initialState, (builder) => {
       return { ...state, currentRandomWordFromDictionary: null };
     }
 
-    //    const randomIndex = Math.floor(Math.random() * words.length);
-
     let randomWord = "";
-
-    /* console.log(
-      "🚀 ~ file: words.reducer.ts:93 ~ builder.addCase ~ alreadyAskedWords:",
-      alreadyAskedWords.join(",")
-    ); */
     while (alreadyAskedWords.includes(randomWord) || randomWord === "") {
       const randomIndex = Math.floor(Math.random() * dictionary.length);
       const randomWordAux = dictionary[randomIndex];
       randomWord = randomWordAux;
-
-      //console.log("Entraaaa");
     }
+    console.log(
+      "🚀 ~ file: wordle.reducer.ts:88 ~ builder.addCase ~ randomWord:",
+      randomWord
+    );
 
     return {
       ...state,
@@ -119,8 +113,6 @@ export const wordsReducer = createReducer(initialState, (builder) => {
       currentWordAddingToDashboard.length < WORDLENGTH;
 
     if (!isEnabledToAddNewLetter) {
-      console.log("IS NOT ALLOWED TO ADD NEW LETTER");
-
       return state;
     }
     const updatedDashboard = lettersDashboard.map((letter) => ({ ...letter }));
@@ -177,16 +169,13 @@ export const wordsReducer = createReducer(initialState, (builder) => {
       !areWordsInBoxesAndCurrentWordDictionaryEqual;
 
     if (isLostGame) {
-      console.log("GAME OVER, YOU LOSE");
       return {
         ...state,
-        isGameOver: true,
         numberOfMatches: numberOfMatches + 1,
         showStatisticsModal: true,
         showRandomWordToPlayer: true,
       };
     } else if (areWordsInBoxesAndCurrentWordDictionaryEqual) {
-      console.log("SON IGUALESSS. GAME OVER, YOU WIN");
       for (
         let i = currentIndexDashboard - WORDLENGTH;
         i < currentIndexDashboard;
@@ -199,7 +188,6 @@ export const wordsReducer = createReducer(initialState, (builder) => {
         lettersDashboard: lettersDashboardUpdated,
         numberOfMatches: numberOfMatches + 1,
         numberOfVictories: numberOfVictories + 1,
-        isGameOver: true,
         showStatisticsModal: true,
       };
     } else {

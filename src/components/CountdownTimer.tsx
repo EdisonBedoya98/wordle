@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import { TIMEINTERVALTOUPDATEWORD } from "../constants/contants";
-
-interface CountdownTimerProps {
-  targetDate: string; // Target date in ISOString format
-}
+import { CountdownTimerProps } from "../models/interfaces/wordle.interface";
 
 export function CountdownTimer({ targetDate }: CountdownTimerProps) {
   const [countdown, setCountdown] = useState<number>(0);

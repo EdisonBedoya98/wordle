@@ -6,7 +6,7 @@ import { Keyboard } from "../components/KeyBoard";
 import { ThemeSwitcher } from "../components/ThemeSwitcher";
 import { StatisticsPopUp } from "../components/StatisticsPopUp";
 import { HowToPlay } from "../components/HowToPlay";
-import { useWords } from "../hooks/useWords";
+import { useWordle } from "../hooks/useWordle";
 import { useGame } from "../hooks/useGame";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,7 +16,7 @@ export function Dashboard() {
     setShowHowToPlayModal,
     setShowStatisticsModal,
     selectedShowStatisticsModal,
-  } = useWords();
+  } = useWordle();
   const { selectedLettersDashboard } = useGame();
 
   return (

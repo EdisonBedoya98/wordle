@@ -1,9 +1,9 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import { wordsReducer } from "../reducers/words/words.reducer";
+import { wordleReducer } from "../reducers/words/wordle.reducer";
 
 export const store = configureStore({
   reducer: {
-    words: wordsReducer,
+    words: wordleReducer,
   },
 });
 
